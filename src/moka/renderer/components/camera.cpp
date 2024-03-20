@@ -76,7 +76,7 @@ Transform& Camera::GetTransform()
   return GetComponent<Transform>();
 }
 
-const Transform& Camera::GetTransformC() const
+const Transform& Camera::GetTransform() const
 {
   return GetComponent<Transform>();
 }

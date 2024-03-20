@@ -22,7 +22,7 @@ public:
   glm::mat4 View() const;
 
   moka::world::components::Transform& GetTransform();
-  const moka::world::components::Transform& GetTransformC() const;
+  const moka::world::components::Transform& GetTransform() const;
 
   void _Init() override;
 };
