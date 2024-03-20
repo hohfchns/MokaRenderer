@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(Moka)
 
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/helpers.cmake")
