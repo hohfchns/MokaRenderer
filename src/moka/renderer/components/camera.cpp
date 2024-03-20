@@ -1,6 +1,7 @@
 #include "moka/renderer/components/camera.h"
 #include "moka/ecs/core/ecs.hpp"
 #include "moka/renderer/main_loop.h"
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include <stdexcept>
@@ -46,7 +47,15 @@ glm::mat4 Camera::Projection() const
 {
   auto* renderer = misc::Singleton<MainLoop>::Ref().GetRenderer();
   float ratio = (float)renderer->WWidth() / (float)renderer->WHeight();
-  return perspective(radians(45.f), ratio, 0.1f, 2000.f);
+
+  if (persp == Perspective::PERSPECTIVE)
+  {
+    return perspective(radians(fov), ratio, near, far);
+  }
+
+  auto trans = GetTransform();
+  auto scale = trans.Scale();
+  return ortho(-scale.x, scale.x, -scale.y, scale.y);
 }
 
 void Camera::RotateFPS(float& lastX, float& lastY, float mouseXpos, float mouseYpos)
@@ -80,4 +89,45 @@ const Transform& Camera::GetTransform() const
 {
   return GetComponent<Transform>();
 }
+
+void Camera::SetPerspective(Perspective persp)
+{
+  this->persp = persp;
+}
+
+Camera::Perspective Camera::GetPerspective()
+{
+  return persp;
+}
+
+void Camera::SetFOV(float fov)
+{
+  this->fov = fov;
+}
+
+float Camera::GetFOV()
+{
+  return fov;
+}
+
+void Camera::SetNear(float near)
+{
+  this->near = near;
+}
+
+float Camera::GetNear()
+{
+  return near;
+}
+
+void Camera::SetFar(float far)
+{
+  this->far = far;
+}
+
+float Camera::GetFar()
+{
+  return far;
+}
+
 }

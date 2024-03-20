@@ -11,6 +11,11 @@ namespace moka::renderer::components
 class Camera : public moka::ecs::Component
 {
 public:
+  enum class Perspective {
+    PERSPECTIVE = 0,
+    ORTHOGRAPHIC,
+  };
+
   void Move(const glm::vec3& by);
 
   void Rotate(float yaw, float pitch);
@@ -24,7 +29,23 @@ public:
   moka::world::components::Transform& GetTransform();
   const moka::world::components::Transform& GetTransform() const;
 
+  void SetPerspective(Perspective persp);
+  Perspective GetPerspective();
+  void SetFOV(float fov);
+  float GetFOV();
+  void SetNear(float near);
+  float GetNear();
+  void SetFar(float far);
+  float GetFar();
+
   void _Init() override;
+
+private:
+  Perspective persp = Perspective::PERSPECTIVE;
+  // Field of View in degrees
+  float fov = 45.f;
+  float near = 0.1f;
+  float far = 2000.f;
 };
 
 }
